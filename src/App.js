@@ -58,13 +58,13 @@ class App extends Component {
   };
 
   filterPlaylists = searchTerm => {
-    const {playlists} = this.state;
+    const { playlists } = this.state;
     const filteredPlaylists = playlists.filter(playlist => {
       const lowercaseName = playlist.name.toLowerCase().trim();
       const lowercaseSearchTerm = searchTerm.toLowerCase().trim();
       return lowercaseName.includes(lowercaseSearchTerm);
     });
-    this.setState({playlists: filteredPlaylists})
+    this.setState({ playlists: filteredPlaylists });
   };
 
   getMe() {
@@ -104,7 +104,10 @@ class App extends Component {
                 me={me}
         />
         <div className="mainContainer">
-          {me ? <h1 className="username">{me.display_name}</h1> : null}
+          <div className="userInfo">
+            {me ? <h1 className="username">{me.display_name}</h1> : null}
+            {nowPlaying ? <p>Now Playing: {nowPlaying.name}</p> : null}
+          </div>
           <SearchBar search={this.filterPlaylists}/>
           <PlaylistGrid playlists={playlists}/>
         </div>

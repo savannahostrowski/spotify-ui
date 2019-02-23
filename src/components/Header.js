@@ -7,8 +7,7 @@ class Header extends Component {
     return (
       <div className="headerContainer">
         {nowPlaying ?
-          <img src={nowPlaying.albumArt} alt={nowPlaying.name}
-               style={{ width: '100%', height: '100%', filter: 'brightness(60%)' }}/> : null}
+          <img src={nowPlaying.albumArt} alt={nowPlaying.name}/> : null}
       </div>
     );
   }
