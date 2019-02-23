@@ -1,33 +1,114 @@
 .App {
-  text-align: center;
+    text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+/* Header styles */
+.headerContainer {
+    height: 330px;
+    position: relative;
+    text-align: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.headerContainer img {
+    object-fit: cover;
+    z-index: -1;
+
 }
 
-.App-link {
-  color: #61dafb;
+@media (min-width: 480px) {
+    .headerContainer {
+        height: 300px;
+    }
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+@media (min-width: 600px) {
+    .headerContainer {
+        height: 400px;
+    }
+    .username {
+        font-size: 50px;
+    }
+}
+
+@media (min-width: 960px) {
+    .headerContainer img {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 45% !important;
+    }
+
+    .headerContainer {
+        position: static;
+    }
+
+
+
+}
+
+.login {
+    position: absolute;
+    color: white;
+    fill: white;
+    top: 25px;
+    right: 2%;
+    z-index: 2;
+    cursor: pointer;
+    -webkit-filter: drop-shadow(2px 2px 5px #000);
+    filter: drop-shadow(2px 2px 5px #000);
+}
+
+.username {
+    color: #ffffff;
+    font-size: 30px;
+    position: absolute;
+    top: 20%;
+}
+
+
+/*
+Main Container
+ */
+.mainContainer {
+    width: 80%;
+    margin: 0 auto;
+}
+
+/*
+Search Bar
+ */
+
+.searchIconDiv {
+    padding: 10px;
+    background-color: black;
+    width: 3%;
+    cursor: pointer;
+}
+
+.searchIcon {
+   padding: 10px;
+    cursor: pointer;
+}
+
+
+.playlistGrid {
+    margin-top: 50px;
+}
+
+.playlistGridTile img {
+    max-width: 100% !important;
+}
+
+.playlistName {
+    display: none;
+    text-align: center;
+    top: 0;
+    left: 0;
+    width: 132px;
+    height: 132px;
+    padding-top: 60px;
+}
+
+.playlistGridTile:hover .playlistName {
+    display: block;
 }
