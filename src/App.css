@@ -17,7 +17,7 @@
     top: 0;
     width: 100%;
     filter: brightness(60%);
-    height: 30% !important;
+    height: 230px !important;
 }
 
 @media (min-width: 600px) {
@@ -26,7 +26,7 @@
     }
 
     .headerContainer img {
-        height: 45% !important;
+        height: 350px !important;
     }
 
     .username {
@@ -53,7 +53,7 @@
 
 .userInfo {
     position: absolute;
-    top: 10%;
+    top: 5%;
 }
 
 .userInfo p {
@@ -104,6 +104,7 @@ Search Bar
 
 .artistGridTile img {
     max-width: 100% !important;
+    max-height: 270px;
 }
 
 .artistName {
@@ -140,3 +141,4 @@ Artist Dialog
     margin: 5px !important;
 
 }
+
