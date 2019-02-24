@@ -4,7 +4,7 @@
 
 /* Header styles */
 .headerContainer {
-    height: 260px;
+    height: 205px;
     position: static;
     text-align: center;
 }
@@ -22,7 +22,7 @@
 
 @media (min-width: 600px) {
     .headerContainer {
-        height: 400px;
+        height: 320px;
     }
 
     .headerContainer img {
@@ -36,12 +36,6 @@
 
     .userInfo {
         top: 20%;
-    }
-}
-
-@media (min-width: 960px) {
-    .headerContainer img {
-        height: 45% !important;
     }
 }
 
