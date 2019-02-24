@@ -15,7 +15,7 @@
     position: absolute;
     left: 0;
     top: 0;
-    width:100%;
+    width: 100%;
     filter: brightness(60%);
     height: 30% !important;
 }
@@ -28,22 +28,20 @@
     .headerContainer img {
         height: 45% !important;
     }
+
     .username {
         font-size: 50px;
 
     }
+
     .userInfo {
-        top:20%;
+        top: 20%;
     }
 }
 
 @media (min-width: 960px) {
     .headerContainer img {
         height: 45% !important;
-    }
-
-    .headerContainer {
-
     }
 }
 
@@ -72,9 +70,8 @@
 .username {
     color: #ffffff;
     font-size: 30px;
+    text-align: left;
 }
-
-
 
 /*
 Main Container
@@ -96,25 +93,26 @@ Search Bar
 }
 
 .searchIcon {
-   padding: 10px;
+    padding: 10px;
     cursor: pointer;
 }
 
 
-.playlistGrid {
+.artistGrid {
     margin-top: 50px;
 }
-.playlistGridTile {
-    position:relative;
-    display:inline-block;
+
+.artistGridTile {
+    position: relative;
+    display: inline-block;
     cursor: pointer;
 }
 
-.playlistGridTile img {
+.artistGridTile img {
     max-width: 100% !important;
 }
 
-.playlistName {
+.artistName {
     text-align: center;
     top: 0;
     left: 0;
@@ -125,14 +123,26 @@ Search Bar
     visibility: hidden;
 }
 
-.playlistName h4{
+.artistName h4 {
     text-align: center;
     color: white;
     display: table-cell;
     vertical-align: middle;
 }
 
-.playlistGridTile:hover .playlistName {
+.artistGridTile:hover .artistName {
     background: rgba(0, 0, 0, 0.6);
     visibility: visible;
+}
+
+/*
+Artist Dialog
+ */
+.genres {
+    padding: 19px;
+    text-align: center;
+}
+.genreButton {
+    margin: 5px !important;
+
 }

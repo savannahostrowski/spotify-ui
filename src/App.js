@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import SpotifyWebApi from 'spotify-web-api-js';
 
 import Header from './components/Header';
-import './App.css';
 import SearchBar from './components/Search';
-import PlaylistGrid from './components/PlaylistGrid';
+import ArtistGrid from './components/ArtistGrid';
+
+import './App.css';
 
 const spotifyApi = new SpotifyWebApi();
 
@@ -13,29 +14,34 @@ class App extends Component {
     loggedIn: false,
     nowPlaying: { name: '', albumArt: '' },
     me: null,
-    playlists: null,
+    artists: null,
+    filteredArtists: null,
   };
 
   componentDidMount() {
-    const token = this.getToken();
+    const params = App.getHashParams();
+    const token = params.access_token;
+
     if (token) {
       spotifyApi.setAccessToken(token);
     }
 
-    this.setState({ loggedIn: !!token });
+    this.interval = setInterval(() => this.getNowPlaying(), 5000);
+
     this.getNowPlaying();
+    this.setState({ loggedIn: !!token });
     this.getMe();
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (!prevState.me && this.state.me) {
-      this.getPlaylists(this.state.me.id);
+    const { me } = this.state;
+    if (!prevState.me && me) {
+      this.getArtists(me.id);
     }
   }
 
-  getToken() {
-    const params = App.getHashParams();
-    return params.access_token;
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   static getHashParams() {
@@ -50,27 +56,33 @@ class App extends Component {
     return hashParams;
   }
 
-  getPlaylists = id => {
-    spotifyApi.getUserPlaylists(id)
+  getArtists = id => {
+    spotifyApi.getFollowedArtists(id)
       .then(response => {
-        this.setState({ playlists: response.items });
+        this.setState({ artists: response.artists.items, filteredArtists: response.artists.items });
       });
   };
 
-  filterPlaylists = searchTerm => {
-    const { playlists } = this.state;
-    const filteredPlaylists = playlists.filter(playlist => {
-      const lowercaseName = playlist.name.toLowerCase().trim();
-      const lowercaseSearchTerm = searchTerm.toLowerCase().trim();
-      return lowercaseName.includes(lowercaseSearchTerm);
-    });
-    this.setState({ playlists: filteredPlaylists });
+  filterArtists = searchTerm => {
+    const { artists } = this.state;
+    const lowercaseSearchTerm = searchTerm.toLowerCase().trim();
+
+
+    if (lowercaseSearchTerm.length === 0) {
+      this.setState({ filteredArtists: artists });
+    } else {
+      const filteredArtists = artists.filter(artist => {
+        const lowercaseName = artist.name.toLowerCase().trim();
+        return lowercaseName.includes(lowercaseSearchTerm);
+      });
+
+      this.setState({ filteredArtists: filteredArtists });
+    }
   };
 
   getMe() {
     spotifyApi.getMe()
       .then(response => {
-        console.log(response);
         this.setState({
           me: response
         });
@@ -83,33 +95,31 @@ class App extends Component {
         this.setState({
           nowPlaying: {
             name: response.item.name,
-            albumArt: response.item.album.images[0].url
+            albumArt: response.item.album.images[0].url,
+            artist: response.item.artists[0].name,
           }
         });
       });
   };
 
   render() {
-    const { loggedIn, nowPlaying, me, playlists } = this.state;
-    const token = this.getToken();
+    const { loggedIn, nowPlaying, me, filteredArtists } = this.state;
+    const params = App.getHashParams();
+    const token = params.access_token;
 
     if (!loggedIn && !token) {
       window.location.assign('http://localhost:8888');
     }
     return (
-
       <div className="App">
-        <Header nowPlaying={nowPlaying}
-                loggedIn={loggedIn}
-                me={me}
-        />
+        <Header nowPlaying={nowPlaying} loggedIn={loggedIn} me={me}/>
         <div className="mainContainer">
           <div className="userInfo">
             {me ? <h1 className="username">{me.display_name}</h1> : null}
-            {nowPlaying ? <p>Now Playing: {nowPlaying.name}</p> : null}
+            {nowPlaying ? <p>Now Playing: {nowPlaying.name} by {nowPlaying.artist}</p> : null}
           </div>
-          <SearchBar search={this.filterPlaylists}/>
-          <PlaylistGrid playlists={playlists}/>
+          <SearchBar search={this.filterArtists}/>
+          <ArtistGrid artists={filteredArtists}/>
         </div>
       </div>
     );

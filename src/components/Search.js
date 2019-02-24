@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
+
 import InputBase from '@material-ui/core/InputBase';
+import Paper from '@material-ui/core/Paper';
 import SearchIcon from '@material-ui/icons/Search';
-import Button from '@material-ui/core/Button';
 import { Divider } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+
 
 const styles = {
   root: {
@@ -20,33 +20,28 @@ const styles = {
 
 class SearchBar extends Component {
   state = {
-    playlistSearchTerm: '',
+    artistSearchTerm: '',
   };
 
   updateSearchTerm = e => {
-    this.setState({ playlistSearchTerm: e.target.value });
+    this.setState({ artistSearchTerm: e.target.value });
   };
 
-  searchPlaylists = () => {
-    const { playlistSearchTerm } = this.state;
-    this.props.search(playlistSearchTerm);
+  searchArtists = () => {
+    const { artistSearchTerm } = this.state;
+    this.props.search(artistSearchTerm);
   };
 
   render() {
     const { classes } = this.props;
     return (
       <Paper className={classes.root} elevation={1}>
-        <InputBase className={classes.input} placeholder="Search for a playlist" onChange={this.updateSearchTerm}/>
+        <InputBase className={classes.input} placeholder="Search for an artist" onChange={this.updateSearchTerm}/>
         <Divider/>
-          <SearchIcon onClick={(e) => this.searchPlaylists(e)} className="searchIcon"/>
+          <SearchIcon onClick={(e) => this.searchArtists(e)} className="searchIcon"/>
       </Paper>
     );
   }
 }
-
-
-SearchBar.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
 export default withStyles(styles)(SearchBar);
