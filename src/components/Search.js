@@ -36,9 +36,18 @@ class SearchBar extends Component {
     const { classes } = this.props;
     return (
       <Paper className={classes.root} elevation={1}>
-        <InputBase className={classes.input} placeholder="Search for an artist" onChange={this.updateSearchTerm}/>
+        <InputBase className={classes.input}
+                   placeholder="Search for an artist"
+                   onChange={this.updateSearchTerm}
+                   onKeyPress={e => {
+                     if (e.key === 'Enter') {
+                       this.searchArtists(e);
+                     }
+                   }}
+        />
         <Divider/>
-          <SearchIcon onClick={(e) => this.searchArtists(e)} className="searchIcon"/>
+        <SearchIcon onClick={e => this.searchArtists(e)}
+                    className="searchIcon"/>
       </Paper>
     );
   }

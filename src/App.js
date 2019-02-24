@@ -120,7 +120,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Header nowPlaying={nowPlaying} loggedIn={loggedIn} me={me} lastArtist={filteredArtists[0]}/>
+        <Header nowPlaying={nowPlaying} loggedIn={loggedIn} me={me} lastArtist={artists[0]}/>
         <div className="mainContainer">
           <div className="userInfo">
             {me ? <h1 className="username">{me.display_name}</h1> : null}

@@ -24,7 +24,7 @@ const redirect_uri = 'http://localhost/callback'; // Your redirect uri
  * @param  {number} length The length of the string
  * @return {string} The generated string
  */
-const generateRandomString = function (length) {
+const generateRandomString = length => {
   let text = '';
   const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -42,7 +42,7 @@ app.use(express.static(`${__dirname}/build`))
   .use(cors())
   .use(cookieParser());
 
-app.get('/login', function (req, res) {
+app.get('/login',  (req, res) => {
 
   const state = generateRandomString(16);
   res.cookie(stateKey, state);
@@ -88,7 +88,7 @@ app.get('/callback', (req, res) => {
       json: true
     };
 
-    request.post(authOptions, function (error, response, body) {
+    request.post(authOptions, (error, response, body) => {
       if (!error && response.statusCode === 200) {
 
         const access_token = body.access_token, refresh_token = body.refresh_token;
@@ -100,7 +100,7 @@ app.get('/callback', (req, res) => {
         };
 
         // use the access token to access the Spotify Web API
-        request.get(options, function (error, response, body) {
+        request.get(options, (error, response, body) => {
           console.log(body);
         });
 
@@ -118,29 +118,6 @@ app.get('/callback', (req, res) => {
       }
     });
   }
-});
-
-app.get('/refresh_token', (req, res) => {
-  // requesting access token from refresh token
-  const refresh_token = req.query.refresh_token;
-  const authOptions = {
-    url: 'https://accounts.spotify.com/api/token',
-    headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
-    form: {
-      grant_type: 'refresh_token',
-      refresh_token: refresh_token
-    },
-    json: true
-  };
-
-  request.post(authOptions, (error, response, body) => {
-    if (!error && response.statusCode === 200) {
-      const access_token = body.access_token;
-      res.send({
-        'access_token': access_token
-      });
-    }
-  });
 });
 
 app.get('*', (req, res) => {
