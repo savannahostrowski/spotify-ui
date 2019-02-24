@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import Grid from '@material-ui/core/Grid';
-import LinearProgress from '@material-ui/core/LinearProgress';
 
 import AboutArtist from './AboutArtist';
 
@@ -22,12 +21,6 @@ class ArtistGrid extends Component {
   render() {
     const { artists } = this.props;
     const { open, selectedArtist } = this.state;
-
-    if (!artists) {
-      return (
-        <LinearProgress/>
-      );
-    }
 
     return (
       <div className="artistGrid">

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import SpotifyWebApi from 'spotify-web-api-js';
 
-import Header from './components/Header';
-import SearchBar from './components/Search';
 import ArtistGrid from './components/ArtistGrid';
+import Header from './components/Header';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import SearchBar from './components/Search';
 
 import './App.css';
 
@@ -103,12 +104,16 @@ class App extends Component {
   };
 
   render() {
-    const { loggedIn, nowPlaying, me, filteredArtists } = this.state;
+    const { loggedIn, nowPlaying, me, artists, filteredArtists } = this.state;
     const params = App.getHashParams();
     const token = params.access_token;
 
     if (!loggedIn && !token) {
-      window.location.assign('http://localhost:8888');
+      window.location.assign('/login');
+    }
+
+    if(!me || !artists) {
+      return( <LinearProgress/>)
     }
     return (
       <div className="App">
