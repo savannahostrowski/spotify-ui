@@ -93,13 +93,15 @@ class App extends Component {
   getNowPlaying() {
     spotifyApi.getMyCurrentPlaybackState()
       .then(response => {
-        this.setState({
-          nowPlaying: {
-            name: response.item.name,
-            albumArt: response.item.album.images[0].url,
-            artist: response.item.artists[0].name,
-          }
-        });
+        if (response.item) {
+          this.setState({
+            nowPlaying: {
+              name: response.item.name,
+              albumArt: response.item.album.images[0].url,
+              artist: response.item.artists[0].name,
+            }
+          });
+        }
       });
   };
 
@@ -115,13 +117,17 @@ class App extends Component {
     if(!me || !artists) {
       return( <LinearProgress/>)
     }
+
     return (
       <div className="App">
-        <Header nowPlaying={nowPlaying} loggedIn={loggedIn} me={me}/>
+        <Header nowPlaying={nowPlaying} loggedIn={loggedIn} me={me} lastArtist={filteredArtists[0]}/>
         <div className="mainContainer">
           <div className="userInfo">
             {me ? <h1 className="username">{me.display_name}</h1> : null}
-            {nowPlaying ? <p>Now Playing: {nowPlaying.name} by {nowPlaying.artist}</p> : null}
+            {nowPlaying.name.length > 0 ?
+              <p>Now Playing: {nowPlaying.name} by {nowPlaying.artist}</p> :
+              <p>Not currently listening to music!</p>
+            }
           </div>
           <SearchBar search={this.filterArtists}/>
           <ArtistGrid artists={filteredArtists}/>
