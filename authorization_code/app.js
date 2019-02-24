@@ -12,9 +12,12 @@ var request = require('request'); // "Request" library
 var cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
+const path = require('path');
+require('dotenv').config();
 
-var client_id = '274f7291d43642dc8b5874b6ef27e458'; // Your client id
-var client_secret = 'a0be93a9bf744e8dbf031a8f72f488b4'; // Your secret
+
+var client_id = process.env.CLIENT_ID; // Your client id
+var client_secret = process.env.CLIENT_SECRET; // Your secret
 var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
 
 /**
@@ -36,7 +39,7 @@ var stateKey = 'spotify_auth_state';
 
 var app = express();
 
-app.use(express.static(__dirname + '/public'))
+app.use( express.static( `${__dirname}/../build` ) )
    .use(cors())
    .use(cookieParser());
 
@@ -142,6 +145,10 @@ app.get('/refresh_token', function(req, res) {
     }
   });
 });
+
+app.get('*', (req, res)=>{
+  res.sendFile(path.join(__dirname, '../build/index.html'));
+})
 
 console.log('Listening on 8888');
 app.listen(8888);
