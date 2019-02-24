@@ -1,6 +1,6 @@
 #### Spotify Artist User Interface
 
-This project generates a simple Spotify user interface to display your favourited artists.
+This project generates a simple, responsive Spotify user interface to display your favourited artists.
 
 This project leverages React (CRA) and Material UI, as well as Spotify's server template in node.
 
