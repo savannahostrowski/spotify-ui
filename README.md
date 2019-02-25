@@ -1,4 +1,4 @@
-#### Spotify Artist User Interface
+#### Spotify Followed Artist User Interface
 
 This project generates a simple, responsive Spotify user interface to display your followed artists.
 
